@@ -1,6 +1,6 @@
 package com.example.domain.repository
 
-import com.example.domain.model.FavouriteVacancyId
+import com.example.domain.model.favouritesmodels.FavouriteVacancyId
 import io.reactivex.Completable
 import io.reactivex.Flowable
 

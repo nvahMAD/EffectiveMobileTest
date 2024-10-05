@@ -1,11 +1,12 @@
 package com.example.effectivemobile.presentation.viewmodel
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.domain.model.FavouriteVacancyId
+import com.example.domain.model.apimodels.ApiResponseModel
+import com.example.domain.model.favouritesmodels.FavouriteVacancyId
+import com.example.domain.usecase.apiusecases.GetApiResponseUseCase
 import com.example.domain.usecase.savedfavourites.AddFavouriteVacancyUseCase
 import com.example.domain.usecase.savedfavourites.GetAllFavouritesUseCase
 import com.example.domain.usecase.savedfavourites.RemoveFavouriteVacancyUseCase
@@ -17,12 +18,17 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val addFavouriteVacancyUseCase: AddFavouriteVacancyUseCase,
     private val removeFavouriteVacancyUseCase: RemoveFavouriteVacancyUseCase,
-    private val getAllFavouritesUseCase: GetAllFavouritesUseCase
+    private val getAllFavouritesUseCase: GetAllFavouritesUseCase,
+    private val getApiResponseUseCase: GetApiResponseUseCase
 ) : ViewModel() {
 
     private val disposable = CompositeDisposable()
+
     private val _favouritesLiveData = MutableLiveData<List<FavouriteVacancyId>>()
     val favouritesLiveData: LiveData<List<FavouriteVacancyId>> get() = _favouritesLiveData
+
+    private val _apiResponseData = MutableLiveData<ApiResponseModel>()
+    val apiResponseData : LiveData<ApiResponseModel> get() = _apiResponseData
 
     @SuppressLint("CheckResult")
     fun getAllStrings() {
@@ -52,6 +58,16 @@ class MainViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
         )
+    }
+
+    @SuppressLint("CheckResult")
+    fun getApiResponse(){
+        getApiResponseUseCase.execute()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { item ->
+                _apiResponseData.postValue(item)
+            }
     }
 
 

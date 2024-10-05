@@ -2,7 +2,7 @@ package com.example.data.repository
 
 import com.example.data.local.FavouriteVacancyDao
 import com.example.data.local.FavouriteVacancyEntity
-import com.example.domain.model.FavouriteVacancyId
+import com.example.domain.model.favouritesmodels.FavouriteVacancyId
 import com.example.domain.repository.FavouriteVacancyIdRepository
 import io.reactivex.Completable
 import io.reactivex.Flowable

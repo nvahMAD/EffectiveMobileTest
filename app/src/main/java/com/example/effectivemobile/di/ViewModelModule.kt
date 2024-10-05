@@ -1,5 +1,6 @@
 package com.example.effectivemobile.di
 
+import com.example.domain.usecase.apiusecases.GetApiResponseUseCase
 import com.example.domain.usecase.savedfavourites.AddFavouriteVacancyUseCase
 import com.example.domain.usecase.savedfavourites.GetAllFavouritesUseCase
 import com.example.domain.usecase.savedfavourites.RemoveFavouriteVacancyUseCase
@@ -16,12 +17,14 @@ class ViewModelModule {
     fun provideViewModelFactory(
         addFavouriteVacancyUseCase: AddFavouriteVacancyUseCase,
         removeFavouriteVacancyUseCase: RemoveFavouriteVacancyUseCase,
-        getAllFavouritesUseCase: GetAllFavouritesUseCase
+        getAllFavouritesUseCase: GetAllFavouritesUseCase,
+        getApiResponseUseCase: GetApiResponseUseCase
     ): MainViewModelFactory {
         return MainViewModelFactory(
             addFavouriteVacancyUseCase,
             removeFavouriteVacancyUseCase,
-            getAllFavouritesUseCase
+            getAllFavouritesUseCase,
+            getApiResponseUseCase
         )
     }
 
