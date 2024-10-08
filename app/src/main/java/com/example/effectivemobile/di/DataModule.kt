@@ -7,8 +7,10 @@ import com.example.data.local.AppDatabase
 import com.example.data.local.FavouriteVacancyDao
 import com.example.data.repository.ApiResponseRepositoryImpl
 import com.example.data.repository.FavouriteVacancyIdRepositoryImpl
+import com.example.data.repository.FunctionalRepositoryImpl
 import com.example.domain.repository.ApiResponseRepository
 import com.example.domain.repository.FavouriteVacancyIdRepository
+import com.example.domain.repository.FunctionalRepository
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -60,6 +62,12 @@ class DataModule {
     @Singleton
     fun provideApiResponseRepository(apiService: ApiService) : ApiResponseRepository{
         return ApiResponseRepositoryImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFunctionalRepository(): FunctionalRepository{
+        return FunctionalRepositoryImpl()
     }
 
 }

@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 @Dao
 interface FavouriteVacancyDao {
@@ -16,5 +17,5 @@ interface FavouriteVacancyDao {
     fun deleteByValue(value: String)
 
     @Query("SELECT * FROM favouritesVacancies")
-    fun getAllFavouritesVacancies(): Flowable<List<FavouriteVacancyEntity>>
+    fun getAllFavouritesVacancies(): Single<List<FavouriteVacancyEntity>>
 }

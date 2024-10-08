@@ -1,7 +1,9 @@
 package com.example.effectivemobile.di
 
 import com.example.effectivemobile.presentation.factory.MainViewModelFactory
-import com.example.effectivemobile.presentation.ui.MainActivity
+import com.example.effectivemobile.presentation.ui.activities.MainActivity
+import com.example.effectivemobile.presentation.ui.fragments.FavouritesFragment
+import com.example.effectivemobile.presentation.ui.fragments.SearchFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -10,6 +12,8 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun inject(activity: MainActivity)
+    fun inject(fragment: SearchFragment)
+    fun inject(fragment: FavouritesFragment)
 
     fun getViewModelFactory(): MainViewModelFactory
 }

@@ -1,9 +1,14 @@
 package com.example.effectivemobile.di
 
+import com.example.domain.repository.ApiResponseRepository
 import com.example.domain.usecase.apiusecases.GetApiResponseUseCase
-import com.example.domain.usecase.savedfavourites.AddFavouriteVacancyUseCase
-import com.example.domain.usecase.savedfavourites.GetAllFavouritesUseCase
-import com.example.domain.usecase.savedfavourites.RemoveFavouriteVacancyUseCase
+import com.example.domain.usecase.functionalusecases.GetMonthNameUseCase
+import com.example.domain.usecase.functionalusecases.GetPeopleDeclensionUseCase
+import com.example.domain.usecase.functionalusecases.GetVacancyDeclensionUseCase
+import com.example.domain.usecase.savedfavourites.AddFavouriteVacancyIdUseCase
+import com.example.domain.usecase.savedfavourites.GetAllFavouritesIdsUseCase
+import com.example.domain.usecase.savedfavourites.GetAllFavouritesVacanciesUseCase
+import com.example.domain.usecase.savedfavourites.RemoveFavouriteVacancyIdUseCase
 import com.example.effectivemobile.presentation.factory.MainViewModelFactory
 import dagger.Module
 import dagger.Provides
@@ -15,16 +20,26 @@ class ViewModelModule {
     @Provides
     @Singleton
     fun provideViewModelFactory(
-        addFavouriteVacancyUseCase: AddFavouriteVacancyUseCase,
-        removeFavouriteVacancyUseCase: RemoveFavouriteVacancyUseCase,
-        getAllFavouritesUseCase: GetAllFavouritesUseCase,
-        getApiResponseUseCase: GetApiResponseUseCase
+        addFavouriteVacancyIdUseCase: AddFavouriteVacancyIdUseCase,
+        removeFavouriteVacancyIdUseCase: RemoveFavouriteVacancyIdUseCase,
+        getAllFavouritesIdsUseCase: GetAllFavouritesIdsUseCase,
+        getApiResponseUseCase: GetApiResponseUseCase,
+        apiResponseRepository: ApiResponseRepository,
+        getAllFavouritesVacanciesUseCase: GetAllFavouritesVacanciesUseCase,
+        getMonthNameUseCase: GetMonthNameUseCase,
+        getPeopleDeclensionUseCase: GetPeopleDeclensionUseCase,
+        getVacancyDeclensionUseCase: GetVacancyDeclensionUseCase
     ): MainViewModelFactory {
         return MainViewModelFactory(
-            addFavouriteVacancyUseCase,
-            removeFavouriteVacancyUseCase,
-            getAllFavouritesUseCase,
-            getApiResponseUseCase
+            addFavouriteVacancyIdUseCase,
+            removeFavouriteVacancyIdUseCase,
+            getAllFavouritesIdsUseCase,
+            getApiResponseUseCase,
+            apiResponseRepository,
+            getAllFavouritesVacanciesUseCase,
+            getMonthNameUseCase,
+            getPeopleDeclensionUseCase,
+            getVacancyDeclensionUseCase
         )
     }
 

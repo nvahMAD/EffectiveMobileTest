@@ -8,7 +8,7 @@ import retrofit2.http.Url
 interface ApiService {
 
     @GET
-    fun getResponce(
+    fun getResponse(
         @Url url: String = "https://drive.usercontent.google.com/u/0/uc?id=1z4TbeDkbfXkvgpoJprXbN85uCcD7f00r&export=download"
     ) : Single<ApiResponseModel>
 

@@ -1,59 +1,142 @@
 package com.example.effectivemobile.presentation.viewmodel
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domain.model.apimodels.ApiResponseModel
+import com.example.domain.model.apimodels.Vacancy
 import com.example.domain.model.favouritesmodels.FavouriteVacancyId
+import com.example.domain.repository.ApiResponseRepository
 import com.example.domain.usecase.apiusecases.GetApiResponseUseCase
-import com.example.domain.usecase.savedfavourites.AddFavouriteVacancyUseCase
-import com.example.domain.usecase.savedfavourites.GetAllFavouritesUseCase
-import com.example.domain.usecase.savedfavourites.RemoveFavouriteVacancyUseCase
+import com.example.domain.usecase.functionalusecases.GetMonthNameUseCase
+import com.example.domain.usecase.functionalusecases.GetPeopleDeclensionUseCase
+import com.example.domain.usecase.functionalusecases.GetVacancyDeclensionUseCase
+import com.example.domain.usecase.savedfavourites.AddFavouriteVacancyIdUseCase
+import com.example.domain.usecase.savedfavourites.GetAllFavouritesIdsUseCase
+import com.example.domain.usecase.savedfavourites.GetAllFavouritesVacanciesUseCase
+import com.example.domain.usecase.savedfavourites.RemoveFavouriteVacancyIdUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val addFavouriteVacancyUseCase: AddFavouriteVacancyUseCase,
-    private val removeFavouriteVacancyUseCase: RemoveFavouriteVacancyUseCase,
-    private val getAllFavouritesUseCase: GetAllFavouritesUseCase,
-    private val getApiResponseUseCase: GetApiResponseUseCase
+    private val addFavouriteVacancyIdUseCase: AddFavouriteVacancyIdUseCase,
+    private val removeFavouriteVacancyIdUseCase: RemoveFavouriteVacancyIdUseCase,
+    private val getAllFavouritesIdsUseCase: GetAllFavouritesIdsUseCase,
+    private val getApiResponseUseCase: GetApiResponseUseCase,
+    private val apiResponseRepository: ApiResponseRepository,
+    private val getAllFavouritesVacanciesUseCase: GetAllFavouritesVacanciesUseCase,
+    private val getMonthNameUseCase: GetMonthNameUseCase,
+    private val getPeopleDeclensionUseCase: GetPeopleDeclensionUseCase,
+    private val getVacancyDeclensionUseCase: GetVacancyDeclensionUseCase
+
 ) : ViewModel() {
 
     private val disposable = CompositeDisposable()
 
-    private val _favouritesLiveData = MutableLiveData<List<FavouriteVacancyId>>()
-    val favouritesLiveData: LiveData<List<FavouriteVacancyId>> get() = _favouritesLiveData
+    private val _favouritesLiveData = MutableLiveData<List<Vacancy>>()
+    val favouritesLiveData: LiveData<List<Vacancy>> get() = _favouritesLiveData
 
     private val _apiResponseData = MutableLiveData<ApiResponseModel>()
-    val apiResponseData : LiveData<ApiResponseModel> get() = _apiResponseData
+    val apiResponseData: LiveData<ApiResponseModel> get() = _apiResponseData
+
+    private val _apiError = MutableLiveData<String>()
+    val apiError: LiveData<String> get() = _apiError
+
+    private val _favouriteCountLiveData = MutableLiveData<Int>()
+    val favouriteCountLiveData: LiveData<Int> get() = _favouriteCountLiveData
+
+    private val _favouritesIdsLiveData = MutableLiveData<List<String>>()
+    val favouritesIdsLiveData: LiveData<List<String>> get() = _favouritesIdsLiveData
+
+    init {
+        getAllFavourites()
+        getApiResponse()
+        getFavouritesIds()
+    }
+
+    fun getVacancyDeclension(count: Int): String{
+        return getVacancyDeclensionUseCase.execute(count)
+    }
+
+    fun getPeopleDeclension(count: Int): String{
+        return getPeopleDeclensionUseCase.execute(count)
+    }
+
+    fun getMonthName(monthNumber: Int): String{
+        return getMonthNameUseCase.execute(monthNumber)
+    }
 
     @SuppressLint("CheckResult")
-    fun getAllStrings() {
-        getAllFavouritesUseCase.execute()
+    fun getFavouritesIds() {
+        getAllFavouritesIdsUseCase.execute()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { strings ->
-                _favouritesLiveData.value = strings
+            .subscribe { ids ->
+                _favouritesIdsLiveData.postValue(ids.map { it.value })
+                _favouriteCountLiveData.postValue(ids.size)
             }
     }
 
-    fun addFavourites(favouriteId: String){
-        val item = FavouriteVacancyId(value = favouriteId)
+    fun onClickVacancyInSearchFragment(vacancy: Vacancy): Boolean {
+        val currentFavouriteVacancies: MutableList<Vacancy> =
+            _favouritesLiveData.value?.toMutableList() ?: mutableListOf()
+        val currentCount = _favouriteCountLiveData.value ?: 0
+        if (!currentFavouriteVacancies.contains(vacancy)) {
+            _favouriteCountLiveData.value = currentCount + 1
+            currentFavouriteVacancies.add(vacancy)
+            _favouritesLiveData.value = currentFavouriteVacancies
+            addFavourites(vacancy)
+        } else {
+            _favouriteCountLiveData.value = currentCount - 1
+            currentFavouriteVacancies.remove(vacancy)
+            _favouritesLiveData.value = currentFavouriteVacancies
+            removeFavourites(vacancy)
+        }
+        return false
+    }
+
+    fun onClickVacancyInFavouritesFragment(vacancy: Vacancy) : Boolean{
+        val currentCount = _favouriteCountLiveData.value ?: 0
+        _favouriteCountLiveData.value = currentCount - 1
+        removeFavourites(vacancy)
+        return true
+    }
+
+
+    @SuppressLint("CheckResult")
+    fun getAllFavourites() {
+        apiResponseRepository.getApiResponse()
+            .flatMap { response ->
+                getAllFavouritesVacanciesUseCase.execute(response.vacancies)
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ favouriteVacancies ->
+                _favouritesLiveData.postValue(favouriteVacancies)
+            }, {
+                Log.e("MainViewModel", "Ошибка загрузки и фильтрации вакансий: ${it.message}")
+            })
+    }
+
+    fun addFavourites(favouriteVacancy: Vacancy) {
+        val item = FavouriteVacancyId(value = favouriteVacancy.id)
         disposable.add(
-            addFavouriteVacancyUseCase.execute(item)
+            addFavouriteVacancyIdUseCase.execute(item)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
         )
+
     }
 
-    fun removeFavourites(favouriteId: String){
-        val item = FavouriteVacancyId(value = favouriteId)
+    private fun removeFavourites(favouriteVacancy: Vacancy) {
+        val item = FavouriteVacancyId(value = favouriteVacancy.id)
         disposable.add(
-            removeFavouriteVacancyUseCase.execute(item)
+            removeFavouriteVacancyIdUseCase.execute(item)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
@@ -61,15 +144,16 @@ class MainViewModel @Inject constructor(
     }
 
     @SuppressLint("CheckResult")
-    fun getApiResponse(){
+    fun getApiResponse() {
         getApiResponseUseCase.execute()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { item ->
+            .subscribe({ item ->
                 _apiResponseData.postValue(item)
-            }
+            }, {
+                _apiError.postValue(it.message)
+            })
     }
-
 
     override fun onCleared() {
         super.onCleared()
