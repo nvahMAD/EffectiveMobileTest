@@ -33,27 +33,27 @@ class DomainModule {
     }
 
     @Provides
-    fun provideGetApiResponseUseCase(repository: ApiResponseRepository) : GetApiResponseUseCase{
+    fun provideGetApiResponseUseCase(repository: ApiResponseRepository): GetApiResponseUseCase {
         return GetApiResponseUseCase(repository)
     }
 
     @Provides
-    fun provideGetAllFavouritesVacanciesUseCase(repository: FavouriteVacancyIdRepository): GetAllFavouritesVacanciesUseCase{
+    fun provideGetAllFavouritesVacanciesUseCase(repository: FavouriteVacancyIdRepository): GetAllFavouritesVacanciesUseCase {
         return GetAllFavouritesVacanciesUseCase(repository)
     }
 
     @Provides
-    fun provideGetMonthNameUseCase(repository: FunctionalRepository): GetMonthNameUseCase{
+    fun provideGetMonthNameUseCase(repository: FunctionalRepository): GetMonthNameUseCase {
         return GetMonthNameUseCase(repository)
     }
 
     @Provides
-    fun provideGetPeopleDeclensionUseCase(repository: FunctionalRepository) : GetPeopleDeclensionUseCase{
+    fun provideGetPeopleDeclensionUseCase(repository: FunctionalRepository): GetPeopleDeclensionUseCase {
         return GetPeopleDeclensionUseCase(repository)
     }
 
     @Provides
-    fun provideGetVacancyDeclensionUseCase(repository: FunctionalRepository): GetVacancyDeclensionUseCase{
+    fun provideGetVacancyDeclensionUseCase(repository: FunctionalRepository): GetVacancyDeclensionUseCase {
         return GetVacancyDeclensionUseCase(repository)
     }
 

@@ -8,6 +8,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-dependencies{
-    implementation (libs.rxjava)
+dependencies {
+    implementation(libs.rxjava)
 }

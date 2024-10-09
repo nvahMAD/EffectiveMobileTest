@@ -5,7 +5,7 @@ import com.example.effectivemobile.di.AppComponent
 import com.example.effectivemobile.di.AppModule
 import com.example.effectivemobile.di.DaggerAppComponent
 
-class EffectiveMobileApp(): Application() {
+class EffectiveMobileApp() : Application() {
     private lateinit var appComponent: AppComponent
 
     override fun onCreate() {

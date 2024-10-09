@@ -4,7 +4,7 @@ import com.example.domain.repository.FunctionalRepository
 
 class FunctionalRepositoryImpl : FunctionalRepository {
     override fun getMonthName(monthNumber: Int): String {
-        return when(monthNumber){
+        return when (monthNumber) {
             1 -> "Января"
             2 -> "Февраля"
             3 -> "Марта"

@@ -9,21 +9,21 @@
     <item
         android:id="@+id/navFavourites"
         android:icon="@drawable/unfavourite_icon"
-        android:title="Избранное"/>
+        android:title="Избранное" />
 
     <item
         android:id="@+id/navResponds"
         android:icon="@drawable/responds_icon"
-        android:title="Отклики"/>
+        android:title="Отклики" />
 
     <item
         android:id="@+id/navMessages"
         android:icon="@drawable/messages_icon"
-        android:title="Сообщения"/>
+        android:title="Сообщения" />
 
     <item
         android:id="@+id/navProfile"
         android:icon="@drawable/profile_icon"
-        android:title="Профиль"/>
+        android:title="Профиль" />
 
 </menu>

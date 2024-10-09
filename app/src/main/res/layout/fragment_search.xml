@@ -161,44 +161,61 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/vacancyRV"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="24dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/moreVacanciesButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/upperBlock" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/moreVacanciesButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone"
-        app:cardBackgroundColor="#2B7EFE"
-        app:cardCornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/upperBlock">
 
-        <TextView
-            android:id="@+id/moreVacanciesButtonTextView"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginVertical="14dp"
-            android:fontFamily="@font/sf_pro_display_semibold"
-            android:text="Еще 143 вакансии"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:nestedScrollingEnabled="true"
+            android:orientation="vertical">
 
-    </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/vacancyRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="24dp"
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/moreVacanciesButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:nestedScrollingEnabled="true"
+                android:visibility="gone"
+                app:cardBackgroundColor="#2B7EFE"
+                app:cardCornerRadius="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/moreVacanciesButtonTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="14dp"
+                    android:fontFamily="@font/sf_pro_display_semibold"
+                    android:text="Еще 143 вакансии"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <ProgressBar
         android:id="@+id/searchProgressBar"

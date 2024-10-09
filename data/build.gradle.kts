@@ -41,16 +41,16 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation (libs.kotlin.stdlib)
+    implementation(libs.kotlin.stdlib)
 
     //Room
-    implementation (libs.androidx.room.runtime)
+    implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.rxjava2)
-    kapt (libs.androidx.room.compiler)
+    kapt(libs.androidx.room.compiler)
 
     //RxJava2
-    implementation (libs.adapter.rxjava2)
-    implementation (libs.rxandroid)
+    implementation(libs.adapter.rxjava2)
+    implementation(libs.rxandroid)
 
     //Domain Module
     implementation(project(":domain"))

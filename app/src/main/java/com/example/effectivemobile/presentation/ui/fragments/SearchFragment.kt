@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.model.apimodels.Vacancy
 import com.example.effectivemobile.EffectiveMobileApp
+import com.example.effectivemobile.R
 import com.example.effectivemobile.databinding.FragmentSearchBinding
 import com.example.effectivemobile.presentation.adapters.OffersAdapter
 import com.example.effectivemobile.presentation.adapters.VacanciesAdapter
@@ -44,23 +45,24 @@ class SearchFragment : Fragment() {
         binding.upperBlock.visibility = View.GONE
         binding.searchProgressBar.visibility = View.VISIBLE
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                if (isMoreClicked){
-                    binding.lessBlock.visibility = View.VISIBLE
-                    binding.moreBlock.visibility = View.GONE
-                    binding.moreVacanciesButton.visibility = View.VISIBLE
-                    isMoreClicked = false
-                    mainViewModel.getFavouritesIds()
-                    getAllVacancies(true)
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (isMoreClicked) {
+                        binding.lessBlock.visibility = View.VISIBLE
+                        binding.moreBlock.visibility = View.GONE
+                        binding.moreVacanciesButton.visibility = View.VISIBLE
+                        isMoreClicked = false
+                        mainViewModel.getFavouritesIds()
+                        getAllVacancies(true)
+                    } else {
+                        isEnabled = false
+                        requireActivity().onBackPressed()
+                    }
                 }
-                else{
-                    isEnabled = false
-                    requireActivity().onBackPressed()
-                }
-            }
 
-        })
+            })
 
         return binding.root
     }
@@ -76,7 +78,17 @@ class SearchFragment : Fragment() {
 
         getAllVacancies(true)
 
+        binding.searchButton.setOnClickListener {
+
+            if (isMoreClicked) {
+                binding.searchButton.setImageResource(R.drawable.search_button)
+                requireActivity().onBackPressed()
+            }
+
+        }
+
         binding.moreVacanciesButton.setOnClickListener {
+            binding.searchButton.setImageResource(R.drawable.back_icon)
             isMoreClicked = true
             binding.lessBlock.visibility = View.GONE
             binding.moreBlock.visibility = View.VISIBLE
@@ -87,19 +99,20 @@ class SearchFragment : Fragment() {
 
     }
 
-    private fun getAllVacancies(shortList: Boolean){
+    private fun getAllVacancies(shortList: Boolean) {
         mainViewModel.apiResponseData.observe(viewLifecycleOwner) { allVacancies ->
 
-            if (allVacancies.offers != null){
+            if (allVacancies.offers != null) {
                 binding.offersRV.adapter = OffersAdapter(allVacancies.offers)
-            }
-            else {
+            } else {
                 binding.offersRV.visibility = View.GONE
             }
-            binding.allVacanciesCountTextView.text = mainViewModel.getVacancyDeclension(allVacancies.vacancies.size)
-            binding.moreVacanciesButtonTextView.text = "Еще ${mainViewModel.getVacancyDeclension(allVacancies.vacancies.size - 3)}"
+            binding.allVacanciesCountTextView.text =
+                mainViewModel.getVacancyDeclension(allVacancies.vacancies.size)
+            binding.moreVacanciesButtonTextView.text =
+                "Еще ${mainViewModel.getVacancyDeclension(allVacancies.vacancies.size - 3)}"
 
-            val vacancyList : MutableList<Vacancy> = if (shortList){
+            val vacancyList: MutableList<Vacancy> = if (shortList) {
                 allVacancies.vacancies.take(3).toMutableList()
             } else {
                 allVacancies.vacancies.toMutableList()
@@ -109,24 +122,32 @@ class SearchFragment : Fragment() {
                 binding.vacancyRV.visibility = View.VISIBLE
                 binding.upperBlock.visibility = View.VISIBLE
                 binding.searchProgressBar.visibility = View.GONE
-                if (shortList){
+                if (shortList) {
                     binding.moreVacanciesButton.visibility = View.VISIBLE
-                }
-                else {
+                } else {
 
                     binding.moreVacanciesButton.visibility = View.GONE
                 }
 
-                binding.vacancyRV.adapter = VacanciesAdapter(
+                val adapter = VacanciesAdapter(
                     vacancyList,
-                    favIds,
+                    favIds.toMutableList(),
                     { monthNumber -> mainViewModel.getMonthName(monthNumber) },
                     { peopleCount ->
                         mainViewModel.getPeopleDeclension(peopleCount)
                     },
+                    false,
                     { clickedVacancy ->
                         mainViewModel.onClickVacancyInSearchFragment(clickedVacancy)
+                    }, {
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.mainFragmentHolder, VacancyFragment())
+                            .commit()
+
                     })
+
+                binding.vacancyRV.adapter = adapter
             }
         }
     }

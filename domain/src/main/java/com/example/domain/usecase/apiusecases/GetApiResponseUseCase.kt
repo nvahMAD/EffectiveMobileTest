@@ -6,7 +6,7 @@ import io.reactivex.Single
 
 class GetApiResponseUseCase(private val apiResponseRepository: ApiResponseRepository) {
 
-    fun execute() : Single<ApiResponseModel>{
+    fun execute(): Single<ApiResponseModel> {
         return apiResponseRepository.getApiResponse()
     }
 

@@ -22,51 +22,47 @@ import javax.inject.Singleton
 class DataModule {
     @Provides
     @Singleton
-    fun provideAppDatabase( context: Context): AppDatabase {
+    fun provideAppDatabase(context: Context): AppDatabase {
         return Room.databaseBuilder(
-            context,
-            AppDatabase::class.java,
-            "favourites_vacancies_database"
+            context, AppDatabase::class.java, "favourites_vacancies_database"
         ).build()
     }
 
     @Provides
     @Singleton
-    fun provideFavouriteVacancyDAO(appDatabase: AppDatabase): FavouriteVacancyDao{
+    fun provideFavouriteVacancyDAO(appDatabase: AppDatabase): FavouriteVacancyDao {
         return appDatabase.favouriteVacancyDAO()
     }
 
     @Provides
     @Singleton
-    fun provideFavouritesVacancyIdRepository(favouriteVacancyDao: FavouriteVacancyDao): FavouriteVacancyIdRepository{
+    fun provideFavouritesVacancyIdRepository(favouriteVacancyDao: FavouriteVacancyDao): FavouriteVacancyIdRepository {
         return FavouriteVacancyIdRepositoryImpl(favouriteVacancyDao)
     }
 
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit{
-        return Retrofit.Builder()
-            .baseUrl("https://drive.usercontent.google.com/")
+    fun provideRetrofit(): Retrofit {
+        return Retrofit.Builder().baseUrl("https://drive.usercontent.google.com/")
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build()
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
     }
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService{
+    fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideApiResponseRepository(apiService: ApiService) : ApiResponseRepository{
+    fun provideApiResponseRepository(apiService: ApiService): ApiResponseRepository {
         return ApiResponseRepositoryImpl(apiService)
     }
 
     @Provides
     @Singleton
-    fun provideFunctionalRepository(): FunctionalRepository{
+    fun provideFunctionalRepository(): FunctionalRepository {
         return FunctionalRepositoryImpl()
     }
 

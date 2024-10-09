@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.effectivemobile.EffectiveMobileApp
+import com.example.effectivemobile.R
 import com.example.effectivemobile.databinding.FragmentFavouritesBinding
 import com.example.effectivemobile.presentation.adapters.VacanciesAdapter
 import com.example.effectivemobile.presentation.factory.MainViewModelFactory
@@ -35,9 +35,7 @@ class FavouritesFragment : Fragment() {
             ViewModelProvider(requireActivity(), mainViewModelFactory)[MainViewModel::class.java]
         mainViewModel.getAllFavourites()
         mainViewModel.getFavouritesIds()
-        binding.favouritesRV.visibility = View.GONE
-        binding.favouriteCountTitle.visibility = View.GONE
-        binding.favouriteProgressBar.visibility = View.VISIBLE
+
 
         return binding.root
     }
@@ -48,9 +46,15 @@ class FavouritesFragment : Fragment() {
         binding.favouritesRV.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
+        binding.favouritesRV.visibility = View.GONE
+        binding.favouriteCountTitle.visibility = View.GONE
+        binding.favouriteProgressBar.visibility = View.VISIBLE
+
+
         mainViewModel.favouritesLiveData.observe(viewLifecycleOwner) { allFavourites ->
 
-            binding.favouriteCountTitle.text = mainViewModel.getVacancyDeclension(allFavourites.size)
+            binding.favouriteCountTitle.text =
+                mainViewModel.getVacancyDeclension(allFavourites.size)
             var vacancyList: Int = allFavourites.toMutableList().size
 
             mainViewModel.favouritesIdsLiveData.observe(viewLifecycleOwner) { allFavouritesIds ->
@@ -59,18 +63,29 @@ class FavouritesFragment : Fragment() {
                 binding.favouriteCountTitle.visibility = View.VISIBLE
                 binding.favouriteProgressBar.visibility = View.GONE
 
-                binding.favouritesRV.adapter =
-                    VacanciesAdapter(allFavourites.toMutableList(), allFavouritesIds, { monthNumber ->
+                val adapter = VacanciesAdapter(allFavourites.toMutableList(),
+                    allFavouritesIds.toMutableList(),
+                    { monthNumber ->
                         mainViewModel.getMonthName(monthNumber)
                     },
-                        { peopleCount ->
-                            mainViewModel.getPeopleDeclension(peopleCount)
-                        },
-                        { clickedVacancy ->
-                            vacancyList -= 1
-                            binding.favouriteCountTitle.text = mainViewModel.getVacancyDeclension(vacancyList)
-                            mainViewModel.onClickVacancyInFavouritesFragment(clickedVacancy)
-                        })
+                    { peopleCount ->
+                        mainViewModel.getPeopleDeclension(peopleCount)
+                    },
+                    true,
+                    { clickedVacancy ->
+                        vacancyList -= 1
+                        binding.favouriteCountTitle.text =
+                            mainViewModel.getVacancyDeclension(vacancyList)
+                        mainViewModel.onClickVacancyInFavouritesFragment(clickedVacancy)
+                    }, {
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.mainFragmentHolder, VacancyFragment())
+                            .commit()
+
+                    })
+                binding.favouritesRV.adapter = adapter
+
 
             }
 

@@ -58,15 +58,15 @@ class MainViewModel @Inject constructor(
         getFavouritesIds()
     }
 
-    fun getVacancyDeclension(count: Int): String{
+    fun getVacancyDeclension(count: Int): String {
         return getVacancyDeclensionUseCase.execute(count)
     }
 
-    fun getPeopleDeclension(count: Int): String{
+    fun getPeopleDeclension(count: Int): String {
         return getPeopleDeclensionUseCase.execute(count)
     }
 
-    fun getMonthName(monthNumber: Int): String{
+    fun getMonthName(monthNumber: Int): String {
         return getMonthNameUseCase.execute(monthNumber)
     }
 
@@ -81,7 +81,7 @@ class MainViewModel @Inject constructor(
             }
     }
 
-    fun onClickVacancyInSearchFragment(vacancy: Vacancy): Boolean {
+    fun onClickVacancyInSearchFragment(vacancy: Vacancy) {
         val currentFavouriteVacancies: MutableList<Vacancy> =
             _favouritesLiveData.value?.toMutableList() ?: mutableListOf()
         val currentCount = _favouriteCountLiveData.value ?: 0
@@ -96,14 +96,12 @@ class MainViewModel @Inject constructor(
             _favouritesLiveData.value = currentFavouriteVacancies
             removeFavourites(vacancy)
         }
-        return false
     }
 
-    fun onClickVacancyInFavouritesFragment(vacancy: Vacancy) : Boolean{
+    fun onClickVacancyInFavouritesFragment(vacancy: Vacancy) {
         val currentCount = _favouriteCountLiveData.value ?: 0
         _favouriteCountLiveData.value = currentCount - 1
         removeFavourites(vacancy)
-        return true
     }
 
 

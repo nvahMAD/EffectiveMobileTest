@@ -18,7 +18,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
     }
 
@@ -50,32 +50,33 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation (libs.material)
+    implementation(libs.material)
+    implementation(libs.androidx.recyclerview)
 
     //Dagger
     implementation(libs.dagger)
-    kapt (libs.dagger.compiler)
+    kapt(libs.dagger.compiler)
     implementation(libs.javax.inject)
 
     //AdapterDelegates
-    implementation (libs.adapterdelegates4.kotlin.dsl)
+    implementation(libs.adapterdelegates4.kotlin.dsl)
 
     //Gson
-    implementation (libs.converter.gson)
-    implementation (libs.gson)
+    implementation(libs.converter.gson)
+    implementation(libs.gson)
 
     //RxJava2
-    implementation (libs.adapter.rxjava2)
-    implementation (libs.rxandroid)
-    implementation (libs.rxjava)
+    implementation(libs.adapter.rxjava2)
+    implementation(libs.rxandroid)
+    implementation(libs.rxjava)
 
     //ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.savedstate)
 
     //Room
-    implementation (libs.androidx.room.runtime)
-    kapt (libs.androidx.room.compiler)
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
 
     //Domain Module
     implementation(project(":domain"))

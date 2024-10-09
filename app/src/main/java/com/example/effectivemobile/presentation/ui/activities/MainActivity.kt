@@ -2,15 +2,15 @@ package com.example.effectivemobile.presentation.ui.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.effectivemobile.EffectiveMobileApp
 import com.example.effectivemobile.R
 import com.example.effectivemobile.databinding.ActivityMainBinding
-import com.example.effectivemobile.presentation.adapters.VacanciesAdapter
 import com.example.effectivemobile.presentation.factory.MainViewModelFactory
 import com.example.effectivemobile.presentation.ui.fragments.FavouritesFragment
+import com.example.effectivemobile.presentation.ui.fragments.MessagesFragment
+import com.example.effectivemobile.presentation.ui.fragments.ProfileFragment
+import com.example.effectivemobile.presentation.ui.fragments.RespondsFragment
 import com.example.effectivemobile.presentation.ui.fragments.SearchFragment
 import com.example.effectivemobile.presentation.viewmodel.MainViewModel
 import com.google.android.material.badge.BadgeDrawable
@@ -37,22 +37,43 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.mainFragmentHolder, SearchFragment())
             .commit()
 
-        binding.bottomNav.setOnNavigationItemSelectedListener {item ->
-            when(item.itemId){
-                R.id.navSearch ->{
+        binding.bottomNav.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navSearch -> {
                     supportFragmentManager.beginTransaction()
-                        .remove(FavouritesFragment())
                         .replace(R.id.mainFragmentHolder, SearchFragment())
                         .commit()
                     true
                 }
-                R.id.navFavourites ->{
+
+                R.id.navFavourites -> {
                     supportFragmentManager.beginTransaction()
-                        .remove(SearchFragment())
                         .replace(R.id.mainFragmentHolder, FavouritesFragment())
                         .commit()
                     true
                 }
+
+                R.id.navResponds -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.mainFragmentHolder, RespondsFragment())
+                        .commit()
+                    true
+                }
+
+                R.id.navMessages -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.mainFragmentHolder, MessagesFragment())
+                        .commit()
+                    true
+                }
+
+                R.id.navProfile -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.mainFragmentHolder, ProfileFragment())
+                        .commit()
+                    true
+                }
+
                 else -> {
                     true
                 }
@@ -60,11 +81,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainViewModel.favouriteCountLiveData.observe(this) { count ->
-            val badge : BadgeDrawable = binding.bottomNav.getOrCreateBadge(R.id.navFavourites)
-            if (count == 0){
+            val badge: BadgeDrawable = binding.bottomNav.getOrCreateBadge(R.id.navFavourites)
+            if (count == 0) {
                 badge.isVisible = false
-            }
-            else {
+            } else {
                 badge.number = count
                 badge.isVisible = true
             }
