@@ -40,8 +40,8 @@ class MainViewModel @Inject constructor(
     private val _favouritesLiveData = MutableLiveData<List<Vacancy>>()
     val favouritesLiveData: LiveData<List<Vacancy>> get() = _favouritesLiveData
 
-    private val _apiResponseData = MutableLiveData<ApiResponseModel>()
-    val apiResponseData: LiveData<ApiResponseModel> get() = _apiResponseData
+    private val _apiResponseLiveData = MutableLiveData<ApiResponseModel>()
+    val apiResponseLiveData: LiveData<ApiResponseModel> get() = _apiResponseLiveData
 
     private val _apiError = MutableLiveData<String>()
     val apiError: LiveData<String> get() = _apiError
@@ -120,7 +120,7 @@ class MainViewModel @Inject constructor(
             })
     }
 
-    fun addFavourites(favouriteVacancy: Vacancy) {
+    private fun addFavourites(favouriteVacancy: Vacancy) {
         val item = FavouriteVacancyId(value = favouriteVacancy.id)
         disposable.add(
             addFavouriteVacancyIdUseCase.execute(item)
@@ -147,7 +147,7 @@ class MainViewModel @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ item ->
-                _apiResponseData.postValue(item)
+                _apiResponseLiveData.postValue(item)
             }, {
                 _apiError.postValue(it.message)
             })

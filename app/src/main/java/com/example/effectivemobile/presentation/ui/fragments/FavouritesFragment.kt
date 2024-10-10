@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.effectivemobile.EffectiveMobileApp
 import com.example.effectivemobile.R
 import com.example.effectivemobile.databinding.FragmentFavouritesBinding
-import com.example.effectivemobile.presentation.adapters.VacanciesAdapter
+import com.example.effectivemobile.presentation.adapters.vacancies.VacanciesAdapter
 import com.example.effectivemobile.presentation.factory.MainViewModelFactory
 import com.example.effectivemobile.presentation.viewmodel.MainViewModel
 import javax.inject.Inject
@@ -35,7 +36,6 @@ class FavouritesFragment : Fragment() {
             ViewModelProvider(requireActivity(), mainViewModelFactory)[MainViewModel::class.java]
         mainViewModel.getAllFavourites()
         mainViewModel.getFavouritesIds()
-
 
         return binding.root
     }

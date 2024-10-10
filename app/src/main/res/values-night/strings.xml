@@ -1,11 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">EffectiveMobile</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="favourite_title">Избранное</string>
-    <string name="favourite_count_title">1 вакансия</string>
     <string name="search_bar_hint">Должность, ключевые слова</string>
-    <string name="arrange_title">По соответствию</string>
     <string name="vacancies_for_you_title">Вакансии для вас</string>
     <string name="respond_button_title">Откликнуться</string>
     <string name="search_title">Поиск</string>

@@ -1,4 +1,4 @@
-package com.example.effectivemobile.presentation.adapters
+package com.example.effectivemobile.presentation.adapters.offers
 
 import android.content.Intent
 import android.net.Uri
@@ -45,7 +45,7 @@ class OffersAdapterDelegate : AdapterDelegate<List<Offer>>() {
                         binding.offerImageBackground.setCardBackgroundColor(
                             ContextCompat.getColor(
                                 itemView.context,
-                                R.color.darkBlue
+                                R.color.special_dark_blue
                             )
                         )
                         binding.offerImage.setImageResource(R.drawable.nearby_vacancies_icon)
@@ -55,7 +55,7 @@ class OffersAdapterDelegate : AdapterDelegate<List<Offer>>() {
                         binding.offerImageBackground.setCardBackgroundColor(
                             ContextCompat.getColor(
                                 itemView.context,
-                                R.color.darkGreen
+                                R.color.special_dark_green
                             )
                         )
                         binding.offerImage.setImageResource(R.drawable.level_up_resume_icon)
@@ -66,7 +66,7 @@ class OffersAdapterDelegate : AdapterDelegate<List<Offer>>() {
                         binding.offerImageBackground.setCardBackgroundColor(
                             ContextCompat.getColor(
                                 itemView.context,
-                                R.color.darkGreen
+                                R.color.special_dark_green
                             )
                         )
                         binding.offerImage.setImageResource(R.drawable.temporary_job_icon)

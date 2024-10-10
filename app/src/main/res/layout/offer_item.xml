@@ -10,7 +10,7 @@
         android:layout_width="132dp"
         android:layout_height="120dp"
         android:layout_marginEnd="8dp"
-        app:cardBackgroundColor="#222325"
+        app:cardBackgroundColor="@color/basic_grey_1"
         app:cardCornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,7 @@
                 android:layout_height="32dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="10dp"
-                app:cardBackgroundColor="#00427D"
+                app:cardBackgroundColor="@color/special_dark_blue"
                 app:cardCornerRadius="16dp">
 
                 <ImageView
@@ -50,7 +50,6 @@
                 android:layout_marginEnd="15dp"
                 android:fontFamily="@font/sf_pro_display_medium"
                 android:maxLines="3"
-                android:text="Вакансии рядом с вами"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
@@ -60,8 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/sf_pro_display_regular"
-                android:text="Поднять"
-                android:textColor="#4CB24E"
+                android:textColor="@color/special_green"
                 android:textSize="14sp"
                 android:visibility="gone" />
 

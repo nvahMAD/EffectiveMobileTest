@@ -1,4 +1,4 @@
-package com.example.effectivemobile.presentation.adapters
+package com.example.effectivemobile.presentation.adapters.vacancies
 
 import android.view.LayoutInflater
 import android.view.View

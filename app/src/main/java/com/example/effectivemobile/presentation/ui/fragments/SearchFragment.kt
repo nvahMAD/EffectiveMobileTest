@@ -12,8 +12,8 @@ import com.example.domain.model.apimodels.Vacancy
 import com.example.effectivemobile.EffectiveMobileApp
 import com.example.effectivemobile.R
 import com.example.effectivemobile.databinding.FragmentSearchBinding
-import com.example.effectivemobile.presentation.adapters.OffersAdapter
-import com.example.effectivemobile.presentation.adapters.VacanciesAdapter
+import com.example.effectivemobile.presentation.adapters.offers.OffersAdapter
+import com.example.effectivemobile.presentation.adapters.vacancies.VacanciesAdapter
 import com.example.effectivemobile.presentation.factory.MainViewModelFactory
 import com.example.effectivemobile.presentation.viewmodel.MainViewModel
 import javax.inject.Inject
@@ -100,7 +100,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun getAllVacancies(shortList: Boolean) {
-        mainViewModel.apiResponseData.observe(viewLifecycleOwner) { allVacancies ->
+        mainViewModel.apiResponseLiveData.observe(viewLifecycleOwner) { allVacancies ->
 
             if (allVacancies.offers != null) {
                 binding.offersRV.adapter = OffersAdapter(allVacancies.offers)

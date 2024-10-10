@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
-        app:cardBackgroundColor="#222325"
+        app:cardBackgroundColor="@color/basic_grey_1"
         app:cardCornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,8 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:fontFamily="@font/sf_pro_display_regular"
-                android:text="Сейчас просматривает 1 человек"
-                android:textColor="#4CB24E"
+                android:textColor="@color/special_green"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -57,7 +56,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/sf_pro_display_medium"
-                    android:text="UI/UX Designer"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
@@ -67,7 +65,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/sf_pro_display_semibold"
-                    android:text="1500-2900 Br"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
@@ -77,7 +74,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/sf_pro_display_regular"
-                    android:text="Минск"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -90,7 +86,6 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/sf_pro_display_regular"
-                android:text="Мобирикс"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -122,7 +117,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/sf_pro_display_regular"
-                android:text="Опыт от 1 года до 3 лет"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="@id/experienceIcon"
                 app:layout_constraintStart_toEndOf="@id/experienceIcon"
@@ -135,8 +129,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/sf_pro_display_regular"
-                android:text="Опубликовано 20 февраля"
-                android:textColor="#858688"
+                android:textColor="@color/basic_grey_3"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/experienceIcon" />
@@ -148,7 +141,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="21dp"
                 android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="#4CB24E"
+                app:cardBackgroundColor="@color/special_green"
                 app:cardCornerRadius="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -161,7 +154,7 @@
                     android:layout_gravity="center"
                     android:layout_marginVertical="7dp"
                     android:fontFamily="@font/sf_pro_display_regular"
-                    android:text="Откликнуться"
+                    android:text="@string/respond_button_title"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 

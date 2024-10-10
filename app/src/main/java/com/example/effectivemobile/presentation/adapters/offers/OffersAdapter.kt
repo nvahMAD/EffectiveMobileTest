@@ -1,4 +1,4 @@
-package com.example.effectivemobile.presentation.adapters
+package com.example.effectivemobile.presentation.adapters.offers
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
